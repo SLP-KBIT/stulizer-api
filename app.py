@@ -1,8 +1,10 @@
-from flask import *
+from flask import Flask, jsonify
+from flask_cors import CORS
 from cardinfo import CardInfo
 from connection import Connection
 
 app = Flask(__name__)
+CORS(app)
 app.config["JSON_AS_ASCII"] = False
 
 @app.route("/")
