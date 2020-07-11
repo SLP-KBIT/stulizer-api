@@ -1,6 +1,6 @@
 from flask import *
 from cardinfo import CardInfo
-from connect import Connection
+from connection import Connection
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
