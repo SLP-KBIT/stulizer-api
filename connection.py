@@ -8,9 +8,10 @@ class Connection:
 
     def check_connect(self):
         with nfc.ContactlessFrontend('usb') as clf:
-            timeOut = lambda: time.time() - started > (1)
-            started = time.time()
-            clf.connect(rdwr={'on-connect': self.on_connect}, terminate=timeOut)
+            target_res = clf.sense(nfc.clf.RemoteTarget("212F"), iterations=5 , interval=0.5)
+            if not target_res is None:
+                tag = nfc.tag.activate(clf, target_res)
+                self.on_connect(tag)
 
     def on_connect(self, tag):
         if tag.type == "Type3Tag":
@@ -25,7 +26,6 @@ class Connection:
                     "name": self.get_student_name(tag),
                     "balance": self.get_balance(tag),
                     }
-        return True
 
     def get_data(self):
         return self.data
